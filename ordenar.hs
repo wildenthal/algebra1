@@ -1,7 +1,7 @@
 quitar :: [Integer] -> Integer -> [Integer]
 quitar a b  | length a== 0 = []
 			| b/=(head a)= [head a] ++ quitar (tail a) b
-			| otherwise = quitar ( tail a) b
+			| otherwise = tail a
 
 repetidos :: [Integer] -> Integer -> [Integer]
 repetidos a b	| length a== 0 = []
