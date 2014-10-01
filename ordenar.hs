@@ -18,3 +18,9 @@ maximo :: [Integer]-> Integer
 maximo a | length a ==1 = head a
 		 | (head a) > maximo (tail a) = head a
 		 | otherwise = maximo (tail a)
+
+estaOrd :: [Integer] -> Bool
+
+estaOrd a | tail a == [] = True 
+	  | head a > head (tail a) = False 
+	  | otherwise = estaord (tail a)
