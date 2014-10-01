@@ -23,4 +23,4 @@ estaOrd :: [Integer] -> Bool
 
 estaOrd a | tail a == [] = True 
 	  | head a > head (tail a) = False 
-	  | otherwise = estaord (tail a)
+	  | otherwise = estaOrd (tail a)
