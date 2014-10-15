@@ -1,0 +1,34 @@
+long :: [Integer] -> Integer
+long [] = 0
+long (x:xs) = 1 + long xs
+
+ceros :: Integer -> [Integer]
+ceros 0 = []
+ceros a = 0: ceros (a-1)
+
+unos :: Integer -> [Integer]
+unos 0 = []
+unos a = 0:unos (a-1)
+
+intercalar :: [Integer] -> [Integer] -> [Integer] --intercala valor a valor.
+intercalar [] (x:xs) = []
+intercalar (y:ys) [] = []
+intercalar (x:xs) (y:ys) = [x] ++ [y] ++ intercalar xs ys
+
+intercalarn :: Integer -> [Integer] -> [Integer] -> [Integer] --intercala n valores con 1 valor entre listas
+intercalarn _ [] (x:xs) = []
+intercalarn _ (y:ys) [] = []
+intercalarn n (x:xs) (y:ys)  | long (x:xs) >= n =  deja n (x:xs) ++ [y] ++ intercalarn n (sobra n (x:xs)) ys
+                             | otherwise = (y:ys)
+
+sobra :: Integer -> [Integer] -> [Integer] --tira los primeros n valores
+sobra 0 _= []
+sobra a (x:xs) |a>=long (x:xs) = x:xs
+               | otherwise = sobra a xs
+               
+--e1 :: [Integer] -> [Integer] -> [Integer]
+
+deja :: Integer -> [Integer] -> [Integer]  --deja los primeros n valores
+deja _ [] = []
+deja a (x:xs) | a<long(x:xs) = x : (deja a xs)
+              | otherwise = deja a xs
