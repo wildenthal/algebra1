@@ -32,3 +32,58 @@ deja :: Integer -> [Integer] -> [Integer]  --deja los primeros n valores
 deja _ [] = []
 deja a (x:xs) | a<long(x:xs) = x : (deja a xs)
               | otherwise = deja a xs
+
+
+------ Ejercicio 2 (Gaston)
+------ A lo mejor es medio lento y se puede optimizar pero funciona
+
+n :: Integer -> Integer -> [[Integer]]
+n a 1 = [[a]]
+n a k = [a]:(n a (k-1))
+
+-- Esto hace una lista tipo: n 1 4 -> [[1],[1],[1],[1]]
+
+
+
+intercalar :: [[Integer]] -> [[Integer]] -> [[Integer]]
+intercalar []  l = l
+intercalar  l [] = l
+intercalar (x:xs) (y:ys) = (x++y):(intercalar xs ys)
+
+-- Funcion intercalar basica de matias modificada para que no trunque números
+
+
+
+algoritmo :: [[Integer]] -> [[Integer]] -> [[Integer]]
+algoritmo (z:zs) (c:[]) = (z++c):zs
+algoritmo (x:xs) (y:ys)
+ | l1 >  l2 = algoritmo (take l2 base) (drop l2 base)
+ | l2 >  l1 = algoritmo (take l1 base) (drop l1 base)
+ | l1 == l2 = base
+ where base = intercalar (x:xs) (y:ys)
+       l1 = length (x:xs)
+       l2 = length (y:ys)
+
+-- Algoritmo basico
+
+
+
+concatenar :: [[Integer]] -> [Integer]
+concatenar (c:[]) = c
+concatenar (x:xs) = x ++ concatenar xs
+
+-- Lo convierte todo en una unica lista
+
+
+
+aplanar :: [Integer] -> Integer
+aplanar (c:[]) = c
+aplanar (x:xs) = x*10^(length (x:xs) - 1) + aplanar xs
+
+-- Lo convierte en numeritos
+
+
+ejercicio2 :: Integer -> Integer -> Integer
+ejercicio2 m k = aplanar(concatenar(algoritmo (n 1 k) (n 0 (m-k))))
+
+--Resuelve el ejercicio para m y k.
