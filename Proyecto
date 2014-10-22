@@ -17,14 +17,8 @@ long (x:xs) = 1 + long xs
 
 --ejercicio2
 
---para el caso donde ejercicio2 a a
-unos :: Integer -> [Integer]
-unos 0 = []
-unos a = 1:unos (a-1)
-
-
 n :: Integer -> Integer -> [[Integer]]
-n a 1 = [[a]]
+n a 0 = []
 n a k = [a]:(n a (k-1))
 -- Esto hace una lista tipo: n 1 4 -> [[1],[1],[1],[1]]
 intercalar :: [[Integer]] -> [[Integer]] -> [[Integer]]
@@ -33,7 +27,7 @@ intercalar l [] = l
 intercalar (x:xs) (y:ys) = (x++y):(intercalar xs ys)
 -- Funcion intercalar basica de matias modificada para que no trunque números
 algoritmo :: [[Integer]] -> [[Integer]] -> [[Integer]]
-algoritmo (z:zs) (c:[]) = (z++c):zs
+algoritmo (z:zs) [] = (z:zs)
 algoritmo (x:xs) (y:ys)
                        | l1 > l2 = algoritmo (tomar l2 base) (deja l2 base)
                        | l2 > l1 = algoritmo (tomar l1 base) (deja l1 base)
@@ -51,8 +45,7 @@ concatenar (x:xs) = x ++ concatenar xs
 -- Lo convierte todo en una unica lista
 
 ejercicio2 :: Integer -> Integer -> [Integer]
-ejercicio2 m k | k==m = unos m
-               | otherwise =concatenar(algoritmo (n 1 k) (n 0 (m-k)))
+ejercicio2 m k = concatenar(algoritmo (n 1 k) (n 0 (m-k)))
 
 
 
@@ -93,10 +86,8 @@ contar :: [Integer] -> Integer --contar unos
 contar [] = 0
 contar (x:xs) | x==1 =1 + contar xs
               | otherwise= contar xs
-                  
 
-                  
- {-
+{-
  probamos en el 1:
  
  *Main> long [1,1,1,1]
