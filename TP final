@@ -28,7 +28,7 @@ listaRotac a = toma (long a) (a : (listaRotac (rotar a)))
 listaRotac1 :: [Integer] -> Integer -> [[Integer]]
 listaRotac1 _ 0 = []
 listaRotac1 a n | (head a) == 1 = a : (listaRotac1 (rotar a) (n-1))
-            		| otherwise = listaRotac1 (rotar a) (n-1)
+		| otherwise = listaRotac1 (rotar a) (n-1)
 
 contar :: [Integer] -> Integer
 contar [] = 0
