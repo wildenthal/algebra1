@@ -50,7 +50,7 @@ algoritmo (x:xs) (y:ys)
         l1 = long (x:xs)
         l2 = long (y:ys)
 
--- En caso de que no se pueda usar ´elem´ en los ejercicios 3 y 5, cambiarla por "elem1":
+-- En caso de que no se pueda usar "elem" en los ejercicios 3 y 5, cambiarla por "elem1":
 
 elem1 :: (Eq a) => a -> [a] -> Bool
 elem1 x [] = False
