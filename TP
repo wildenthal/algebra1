@@ -8,7 +8,7 @@ toma a (x:xs) = x : toma (a-1) xs
 deja :: Integer ->[a] -> [a] 
 deja _ [] = []
 deja 0 xs = xs
-deja a (x:xs) = (deja (a-1) xs)
+deja a (x:xs) = deja (a-1) xs
 
 n :: Integer -> Integer -> [[Integer]]
 n a 0 = []
