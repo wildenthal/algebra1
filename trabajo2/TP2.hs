@@ -36,3 +36,8 @@ showP (Imp p q) = "(" ++ (showP p) ++ " => " ++ (showP q) ++ ")"
 eliminarImplicaciones :: Proposicion -> Proposicion
 eliminarImplicaciones (Imp a b) = O (No(eliminarImplicaciones a)) (eliminarImplicaciones b)
 eliminarImplicaciones a = a
+
+
+--Ejercicio 6
+combinacion :: Integer -> (Bool, Bool, Bool)
+combinacion a = ( odd (div a 4), odd (div a 2), odd a)
