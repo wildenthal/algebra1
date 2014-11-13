@@ -1,0 +1,57 @@
+type Conj= [Integer]
+
+tuplas :: [a] -> [b] -> [(a, b)]
+tuplas [] _ = []
+tuplas _ [] = []
+tuplas (x:xs) (y:ys) = (x,y) : (tuplas xs ys)
+
+invertir :: [(Integer, Integer)] -> [(Integer, Integer)]
+invertir [] = []
+invertir ((x,y):xs) = (y,x) : invertir xs 
+
+resta :: [Integer]->[Integer]->[Integer]
+resta [] _ = []
+resta _ [] = []
+resta (x:xs) ys | elem x ys = resta xs ys
+			  | otherwise = x: resta xs ys
+			  
+			  
+diff :: [Integer] -> [Integer] -> [Integer]
+diff a b = resta a b ++ resta b a
+
+
+incluido :: Conj -> Conj -> Bool
+incluido [] _ = True
+incluido _ [] = False
+incluido (x:xs) y | elem x y = incluido xs y
+				  |otherwise= False
+
+				  
+equivalente :: Conj -> Conj -> Bool
+equivalente a b= (incluido a b) && (incluido b a)
+
+
+tomar :: Integer -> Conj -> Conj
+tomar _ [] = []
+tomar a (x:xs) |a<0= []
+			   |otherwise = x : (tomar (a-1) xs)
+			   
+			   
+tomar2 :: Integer -> Conj -> Conj
+tomar2 _ [] = []
+tomar2 a (x:xs) |a==1 = []
+			   |otherwise = x : (tomar2 (a-1) xs)
+			   
+			   
+dejar :: Integer -> Conj -> Conj
+dejar _ [] = []
+dejar a xs = tomar2 a (reverse xs) 
+
+
+separar :: Integer -> Conj -> [(Conj, Conj)]
+separar a xs = [(tomar a xs, reverse (dejar ((largo xs) -a) xs))]
+
+
+largo :: Conj -> Integer --no uso length porque devuelve Int, no Integer 
+largo [] = 0
+largo (x:xs) = 1+ largo xs
