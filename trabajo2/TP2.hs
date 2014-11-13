@@ -34,3 +34,8 @@ eliminarImplicaciones (O a b) = O (eliminarImplicaciones a) (eliminarImplicacion
 eliminarImplicaciones (Y a b) = Y (eliminarImplicaciones a) (eliminarImplicaciones b)
 eliminarImplicaciones (No a) = No (eliminarImplicaciones a)
 eliminarImplicaciones a = a
+
+
+--Ejercicio 6
+combinacion :: Integer -> (Bool, Bool, Bool)
+combinacion a = ( odd (div a 4), odd (div a 2), odd a)
