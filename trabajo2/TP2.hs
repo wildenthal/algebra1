@@ -8,12 +8,11 @@ data Proposicion = P
 
 --Ejercicio 1
 atomoONegacion :: Proposicion -> Bool
-atomoONegacion No _ = True
-atomoONegacion x | x == P = True
-                 | x == Q = True
-                 | x == R = True
-                 | otherwise = False
-
+atomoONegacion P = True
+atomoONegacion Q = True
+atomoONegacion R = True
+atomoONegacion (No _) = True
+atomoONegacion _ = False
 --Ejercicio 2
 showP :: Proposicion -> String
 showP P = "P"
