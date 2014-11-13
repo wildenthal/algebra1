@@ -1,0 +1,12 @@
+--nkEquivalente :: [Integer] ->Bool
+--nkEquivalente a = igualar a (ejercicio2 n k)
+
+contar :: [Integer] -> Integer
+contar [] = 0
+contar (x:xs) | x==1 =1 + contar xs
+			  | otherwise= contar xs
+			
+igualar :: [Integer] -> [Integer] -> Bool
+igualar _ [] = True
+igualar (x:xs) (y:ys) | igualar xs ys == True && x==y = True 
+					  | otherwise = False

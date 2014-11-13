@@ -1,0 +1,61 @@
+data Figura1 = A | B | D Figura2 deriving (Eq, Show) 
+data Figura2 = C | F | E Figura1 deriving (Eq, Show)	--Lista enlazada copada, como en C
+
+
+
+data Direccion = Norte | Sur | Este | Oeste deriving Show
+type Tortuga = (Pos, Direccion)
+type Pos = (Int, Int)
+
+arranca :: Tortuga --devuelve (0,0) mirando al norte
+arranca = ((0,0), Norte) --Norte es un constructor de tipo direccion
+
+girarDerecha :: Tortuga -> Tortuga
+girarDerecha (a, Norte) = (a, Este)
+girarDerecha (a, Este) = (a, Sur)
+girarDerecha (a, Sur) = (a, Oeste)
+girarDerecha (a, Oeste) = (a, Norte) --No se puede igualar
+
+--girarIzquierda lo mismo pero al reves
+
+avanzar :: Tortuga -> Int -> Tortuga 
+avanzar ((x,y), Norte) n = ((x, y+n), Norte)
+avanzar ((x,y), Sur) n = ((x, y-n), Sur)
+avanzar ((x,y), Oeste) n = ((x-n, y), Oeste)
+avanzar ((x,y), Este) n = ((x+n, y), Este)
+
+
+--constructores de tipos algebraicos
+type Punto = (Float, Float)
+data Figura =  Rectangulo Punto Punto | Circulo Punto Float | Triangulo Punto Punto Punto deriving (Eq, Show)
+
+circpi :: Figura
+circpi = Circulo (0,0) pi
+
+tRectangulo :: Float -> Float -> Figura
+tRectangulo a b = Rectangulo (0,0) (a,b)
+
+area :: Figura -> Float
+area (Circulo p b) = pi * b * b
+area (Rectangulo (a,b) (x,y)) =  ((a-x) * (b-y))
+area (Triangulo (a,b) (x,y) (c,d)) =  (productoV (a-x, b-y) (c-x, c-y)) /2
+
+productoV :: (Float, Float) -> (Float, Float) -> Float	
+productoV (a,b) (c,d) = abs (a*d - b*c)
+
+
+
+
+criba :: Integer -> [Integer]
+criba a = criba2 [2..a]
+
+criba2 :: [Integer] -> [Integer]
+criba2 [] = []
+criba2 (x:xs) = x : criba2 (multiplos x xs)
+
+
+multiplos :: Integer -> [Integer] -> [Integer]
+multiplos a [] = []
+multiplos a (x:xs) | mod x a /= 0  = x:multiplos a xs
+		   | otherwise = multiplos a xs	
+		 
