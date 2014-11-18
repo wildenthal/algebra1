@@ -5,6 +5,7 @@ data Proposicion = P
                  | Y Proposicion Proposicion
                  | O Proposicion Proposicion
                  | Imp Proposicion Proposicion
+ deriving (Eq)
 
 instance Show Proposicion where
  show x = showP x
@@ -19,13 +20,16 @@ atomoONegacion _ = False
 
 --Ejercicio 2
 showP :: Proposicion -> String
-showP P = "P"
-showP Q = "Q"
-showP R = "R"
-showP (No p) = "~"++(showP p)
-showP (Y p q) = "(" ++ (showP p) ++ " ^ " ++ (showP q) ++ ")"
-showP (O p q) = "(" ++ (showP p) ++ " v " ++ (showP q) ++ ")"
-showP (Imp p q) = "(" ++ (showP p) ++ " => " ++ (showP q) ++ ")"
+showP (Y a b) = showAuxiliar a ++ " ^ " ++ showAuxiliar b
+showP (O a b) = showAuxiliar a ++ " v " ++ showAuxiliar b
+showP (Imp a b) = showAuxiliar a ++ " => " ++ showAuxiliar b
+showP (No a) = "~" ++ showAuxiliar a
+
+showAuxiliar :: Proposicion -> String
+showAuxiliar a | a == P = "P"
+               | a == Q = "Q"
+               | a == R = "R"
+               | otherwise = "(" ++ showP a ++ ")"
 
 --Ejercicio3
 eliminarImplicaciones :: Proposicion -> Proposicion
