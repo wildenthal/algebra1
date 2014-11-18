@@ -24,8 +24,10 @@ showP (Y a b) = showAuxiliar a ++ " ^ " ++ showAuxiliar b
 showP (O a b) = showAuxiliar a ++ " v " ++ showAuxiliar b
 showP (Imp a b) = showAuxiliar a ++ " => " ++ showAuxiliar b
 showP (No a) = "~" ++ showAuxiliar a
+showP a = showAuxiliar a
 
 showAuxiliar :: Proposicion -> String
+showAuxiliar (No a) = "~"++ (showAuxiliar a)
 showAuxiliar a | a == P = "P"
                | a == Q = "Q"
                | a == R = "R"
@@ -38,6 +40,16 @@ eliminarImplicaciones (O a b) = O (eliminarImplicaciones a) (eliminarImplicacion
 eliminarImplicaciones (Y a b) = Y (eliminarImplicaciones a) (eliminarImplicaciones b)
 eliminarImplicaciones (No a) = No (eliminarImplicaciones a)
 eliminarImplicaciones a = a
+
+--Ejercicio 4
+aFNN :: Proposicion -> Proposicion
+aFNN p = aFNN2 (eliminarImplicaciones p)
+ where aFNN2 (No (Y a b)) = (O (aFNN2 (No a)) (aFNN2 (No b)))
+       aFNN2 (No (O a b)) = (Y (aFNN2 (No (eliminarImplicaciones a))) (aFNN2 (No (eliminarImplicaciones b))))
+       aFNN2 (No (No a)) = aFNN2 a
+       aFNN2 (No a) = No (aFNN2 a)
+       aFNN2 b = b
+
 
 --Ejercicio 5
 evaluar :: Proposicion -> (Bool, Bool, Bool) -> Bool
@@ -55,3 +67,14 @@ evaluar (No a) terna = not (evaluar a terna)
 --Ejercicio 6
 combinacion :: Integer -> (Bool, Bool, Bool)
 combinacion a = ( odd (div a 4), odd (div a 2), odd a)
+
+--Ejercicio 7
+data TipoFormula = Tautologia | Contradiccion | Contingencia deriving (Show)
+
+tablaDeVerdad :: Proposicion -> Integer -> [Bool]
+tablaDeVerdad p n = (evaluar p (combinacion n)) : (tablaDeVerdad p (n+1))
+
+tipoDeFormula :: Proposicion -> TipoFormula
+tipoDeFormula p | take 8 (tablaDeVerdad p 0) == take 8 (cycle [True]) = Tautologia
+                | take 8 (tablaDeVerdad p 0) == take 8 (cycle [False]) = Contradiccion
+                | otherwise = Contingencia
