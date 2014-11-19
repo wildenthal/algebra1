@@ -72,6 +72,6 @@ tablaDeVerdadInfinita :: Proposicion -> Integer -> [Bool]
 tablaDeVerdadInfinita p n = (evaluar p (combinacion n)) : (tablaDeVerdad p (n+1))
 
 tipoDeFormula :: Proposicion -> TipoFormula
-tipoDeFormula p | take 8 (tablaDeVerdadInfinita p 0) == replicate 8 True) = Tautologia
-                | take 8 (tablaDeVerdadInfinita p 0) == replicate 8 False) = Contradiccion
+tipoDeFormula p | take 8 (tablaDeVerdadInfinita p 0) == (replicate 8 True) = Tautologia
+                | take 8 (tablaDeVerdadInfinita p 0) == (replicate 8 False) = Contradiccion
                 | otherwise = Contingencia
