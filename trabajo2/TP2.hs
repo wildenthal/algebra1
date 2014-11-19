@@ -56,7 +56,7 @@ evaluar :: Proposicion -> (Bool, Bool, Bool) -> Bool
 evaluar p (x, y, z) | p == P = x
                     | p == Q = y
                     | p == R = z
-evaluar (Imp _ _) terna = evaluar (eliminarImplicaciones (Imp _ _)) terna
+evaluar (Imp a b) terna = evaluar (eliminarImplicaciones (Imp a b)) terna
 evaluar (Y a b) terna = (evaluar a terna) && (evaluar b terna)
 evaluar (O a b) terna = (evaluar a terna) || (evaluar b terna)
 evaluar (No a) terna = not (evaluar a terna)
