@@ -44,11 +44,13 @@ eliminarImplicaciones a = a
 --Ejercicio 4
 aFNN :: Proposicion -> Proposicion
 aFNN p = aFNN2 (eliminarImplicaciones p)
- where aFNN2 (No (Y a b)) = (O (aFNN2 (No a)) (aFNN2 (No b)))
-       aFNN2 (No (O a b)) = (Y (aFNN2 (No (eliminarImplicaciones a))) (aFNN2 (No (eliminarImplicaciones b))))
-       aFNN2 (No (No a)) = aFNN2 a
-       aFNN2 (No a) = No (aFNN2 a)
-       aFNN2 b = b
+ 
+ aFNN2 Proposicion -> Proposicion
+ aFNN2 (No (Y a b)) = (O (aFNN2 (No a)) (aFNN2 (No b)))
+ aFNN2 (No (O a b)) = (Y (aFNN2 (No (eliminarImplicaciones a))) (aFNN2 (No (eliminarImplicaciones b))))
+ aFNN2 (No (No a)) = aFNN2 a
+ aFNN2 (No a) = No (aFNN2 a)
+ aFNN2 b = b
 
 
 --Ejercicio 5
