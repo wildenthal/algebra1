@@ -56,12 +56,9 @@ evaluar :: Proposicion -> (Bool, Bool, Bool) -> Bool
 evaluar p (x, y, z) | p == P = x
                     | p == Q = y
                     | p == R = z
-evaluar (Imp a b) terna | (evaluar b terna) == False && (evaluar a terna) == True = False
-                        | otherwise = True
-evaluar (Y a b) terna | (evaluar a terna) == True && (evaluar b terna) == True = True
-                      | otherwise = False
-evaluar (O a b) terna | (evaluar a terna) == False && (evaluar b terna) == False = False
-                      | otherwise = True
+evaluar (Imp _ _) terna = evaluar (eliminarImplicaciones (Imp _ _)) terna
+evaluar (Y a b) terna = (evaluar a terna) && (evaluar b terna)
+evaluar (O a b) terna = (evaluar a terna) || (evaluar b terna)
 evaluar (No a) terna = not (evaluar a terna)
 
 --Ejercicio 6
@@ -71,10 +68,10 @@ combinacion a = ( odd (div a 4), odd (div a 2), odd a)
 --Ejercicio 7
 data TipoFormula = Tautologia | Contradiccion | Contingencia deriving (Show)
 
-tablaDeVerdad :: Proposicion -> Integer -> [Bool]
-tablaDeVerdad p n = (evaluar p (combinacion n)) : (tablaDeVerdad p (n+1))
+tablaDeVerdadInfinita :: Proposicion -> Integer -> [Bool]
+tablaDeVerdadInfinita p n = (evaluar p (combinacion n)) : (tablaDeVerdad p (n+1))
 
 tipoDeFormula :: Proposicion -> TipoFormula
-tipoDeFormula p | take 8 (tablaDeVerdad p 0) == take 8 (cycle [True]) = Tautologia
-                | take 8 (tablaDeVerdad p 0) == take 8 (cycle [False]) = Contradiccion
+tipoDeFormula p | take 8 (tablaDeVerdadInfinita p 0) == replicate 8 True) = Tautologia
+                | take 8 (tablaDeVerdadInfinita p 0) == replicate 8 False) = Contradiccion
                 | otherwise = Contingencia
