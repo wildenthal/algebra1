@@ -45,12 +45,12 @@ eliminarImplicaciones a = a
 aFNN :: Proposicion -> Proposicion
 aFNN p = aFNN2 (eliminarImplicaciones p)
  
- aFNN2 Proposicion -> Proposicion
- aFNN2 (No (Y a b)) = (O (aFNN2 (No a)) (aFNN2 (No b)))
- aFNN2 (No (O a b)) = (Y (aFNN2 (No (eliminarImplicaciones a))) (aFNN2 (No (eliminarImplicaciones b))))
- aFNN2 (No (No a)) = aFNN2 a
- aFNN2 (No a) = No (aFNN2 a)
- aFNN2 b = b
+aFNN2 :: Proposicion -> Proposicion
+aFNN2 (No (Y a b)) = (O (aFNN2 (No a)) (aFNN2 (No b)))
+aFNN2 (No (O a b)) = (Y (aFNN2 (No (eliminarImplicaciones a))) (aFNN2 (No (eliminarImplicaciones b))))
+aFNN2 (No (No a)) = aFNN2 a
+aFNN2 (No a) = No (aFNN2 a)
+aFNN2 b = b
 
 
 --Ejercicio 5
@@ -71,7 +71,7 @@ combinacion a = ( odd (div a 4), odd (div a 2), odd a)
 data TipoFormula = Tautologia | Contradiccion | Contingencia deriving (Show)
 
 tablaDeVerdadInfinita :: Proposicion -> Integer -> [Bool]
-tablaDeVerdadInfinita p n = (evaluar p (combinacion n)) : (tablaDeVerdad p (n+1))
+tablaDeVerdadInfinita p n = (evaluar p (combinacion n)) : (tablaDeVerdadInfinita p (n+1))
 
 tipoDeFormula :: Proposicion -> TipoFormula
 tipoDeFormula p | take 8 (tablaDeVerdadInfinita p 0) == (replicate 8 True) = Tautologia
